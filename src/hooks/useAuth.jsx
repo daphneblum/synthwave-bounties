@@ -9,3 +9,8 @@ export function AuthProvider({ children }) {
         const stored = localStorage.getItem(STORAGE_KEY);
     })
 }
+
+const claimUsername = useCallback((username) => {
+    const trimmed = username.trim();
+    
+})

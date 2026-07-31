@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap');
+
+:root {
+  /* Color tokens */
+  --bg: #0d0221;
+  --panel: #170a35;
+  --panel-raised: #1f0f47;
+  --border: #4deeea;
+  --cyan: #4deeea;
+  --magenta: #f92aad;
+  --purple: #b967ff;
+  --gold: #ffd319;
+  --text: #e0e0ff;
+  --text-dim: #8f85c2;
+  --danger: #ff3864;
+
+  /* Type */
+  --font-terminal: 'VT323', monospace;
+  --font-display: 'Press Start 2P', monospace;
+
+  /* Layout */
+  --radius: 2px;
+  --scanline-opacity: 0.06;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-terminal);
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+#root {
+  min-height: 100vh;
+  position: relative;
+}
+
+/* faint grid backdrop behind every terminal page */
+body {
+  background-image:
+    linear-gradient(rgba(77, 238, 234, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(77, 238, 234, 0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+a {
+  color: var(--cyan);
+}
+
+button {
+  font-family: var(--font-terminal);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+input, textarea, select {
+  font-family: var(--font-terminal);
+  font-size: 1.1rem;
+}
+
+::selection {
+  background: var(--magenta);
+  color: var(--bg);
+}
+
+/* Reusable terminal button */
+.btn {
+  background: transparent;
+  border: 1px solid var(--cyan);
+  color: var(--cyan);
+  padding: 0.5em 1em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: var(--radius);
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn:hover {
+  background: var(--cyan);
+  color: var(--bg);
+  box-shadow: 0 0 12px rgba(77, 238, 234, 0.6);
+}
+
+.btn.magenta {
+  border-color: var(--magenta);
+  color: var(--magenta);
+}
+.btn.magenta:hover {
+  background: var(--magenta);
+  color: var(--bg);
+  box-shadow: 0 0 12px rgba(249, 42, 173, 0.6);
+}
+
+.btn.danger {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+.btn.danger:hover {
+  background: var(--danger);
+  color: var(--bg);
+  box-shadow: 0 0 12px rgba(255, 56, 100, 0.6);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.btn:disabled:hover {
+  background: transparent;
+  color: var(--cyan);
+  box-shadow: none;
+}
+
+/* Terminal panel */
+.terminal-window {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 0 24px rgba(77, 238, 234, 0.15);
+}
+
+.terminal-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4em 0.8em;
+  border-bottom: 1px solid var(--border);
+  color: var(--cyan);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.terminal-titlebar .dots {
+  display: flex;
+  gap: 6px;
+}
+.terminal-titlebar .dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-dim);
+}
+
+.thread-heading {
+  color: var(--cyan);
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-bottom: 1px dashed rgba(77, 238, 234, 0.3);
+  padding-bottom: 0.4rem;
+  margin: 2rem 0 1rem;
+}
+
+.empty-state {
+  color: var(--text-dim);
+  border: 1px dashed rgba(77, 238, 234, 0.3);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-align: center;
+  letter-spacing: 0.03em;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* respect OS-level reduced motion no matter what */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
