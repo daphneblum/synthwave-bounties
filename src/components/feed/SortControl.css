@@ -1,0 +1,29 @@
+.sort-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+}
+
+.sort-label {
+  color: var(--text-dim);
+}
+
+.sort-option {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-dim);
+  padding: 0.2em 0.6em;
+  letter-spacing: 0.04em;
+  border-radius: var(--radius);
+}
+
+.sort-option:hover {
+  color: var(--cyan);
+}
+
+.sort-option.active {
+  color: var(--bg);
+  background: var(--cyan);
+}
