@@ -1,0 +1,38 @@
+.flicker-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(77, 238, 234, 0.05) 0px,
+    rgba(77, 238, 234, 0.05) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+.flicker-layer {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: brightness(1);
+  animation: crt-flicker 4.2s infinite;
+}
+
+@keyframes crt-flicker {
+  0%   { backdrop-filter: brightness(1); }
+  2%   { backdrop-filter: brightness(0.93); }
+  4%   { backdrop-filter: brightness(1.02); }
+  19%  { backdrop-filter: brightness(1); }
+  21%  { backdrop-filter: brightness(0.95); }
+  23%  { backdrop-filter: brightness(1); }
+  55%  { backdrop-filter: brightness(1); }
+  57%  { backdrop-filter: brightness(0.9); }
+  59%  { backdrop-filter: brightness(1.01); }
+  100% { backdrop-filter: brightness(1); }
+}

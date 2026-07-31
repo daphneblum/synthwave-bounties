@@ -1,0 +1,22 @@
+.terminal-frame {
+  max-width: 960px;
+  margin: 1.5rem auto;
+  min-height: calc(100vh - 3rem);
+  display: flex;
+  flex-direction: column;
+}
+
+.terminal-body {
+  padding: 1.25rem 1.5rem 2rem;
+  flex: 1;
+}
+
+@media (max-width: 640px) {
+  .terminal-frame {
+    margin: 0;
+    min-height: 100vh;
+    max-width: 100%;
+    border-left: none;
+    border-right: none;
+  }
+}

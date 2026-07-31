@@ -1,0 +1,53 @@
+.post-card {
+  display: flex;
+  gap: 1rem;
+  padding: 0.9rem;
+  border: 1px solid rgba(77, 238, 234, 0.25);
+  border-radius: var(--radius);
+  margin-bottom: 0.75rem;
+  background: var(--panel-raised);
+  transition: border-color 0.15s ease;
+}
+
+.post-card:hover {
+  border-color: var(--cyan);
+}
+
+.post-card-body {
+  text-decoration: none;
+  color: inherit;
+  flex: 1;
+  min-width: 0;
+}
+
+.post-card-title {
+  margin: 0 0 0.4rem;
+  font-size: 1.3rem;
+  font-weight: normal;
+  color: var(--text);
+}
+
+.post-card-body:hover .post-card-title {
+  color: var(--cyan);
+}
+
+.solved-tag {
+  color: var(--gold);
+  font-size: 0.9rem;
+  margin-right: 0.5em;
+  border: 1px solid var(--gold);
+  padding: 0.05em 0.35em;
+  border-radius: var(--radius);
+}
+
+.post-card-meta {
+  color: var(--text-dim);
+  font-size: 1rem;
+  display: flex;
+  gap: 0.4em;
+  flex-wrap: wrap;
+}
+
+.meta-sep {
+  opacity: 0.5;
+}
