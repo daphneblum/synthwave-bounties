@@ -1,0 +1,45 @@
+.comment-item {
+  border: 1px solid rgba(77, 238, 234, 0.2);
+  border-radius: var(--radius);
+  padding: 0.8rem 1rem;
+  margin-bottom: 0.75rem;
+  background: var(--panel-raised);
+}
+
+.comment-item.accepted {
+  border-color: var(--gold);
+  box-shadow: 0 0 10px rgba(255, 211, 25, 0.25);
+}
+
+.accepted-banner {
+  color: var(--gold);
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
+}
+
+.comment-body {
+  margin: 0 0 0.5rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.comment-meta {
+  display: flex;
+  gap: 0.4em;
+  flex-wrap: wrap;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+}
+
+.mark-best-btn {
+  background: none;
+  border: none;
+  color: var(--purple);
+  padding: 0;
+  text-decoration: underline;
+  font-size: 0.95rem;
+}
+.mark-best-btn:hover {
+  color: var(--magenta);
+}

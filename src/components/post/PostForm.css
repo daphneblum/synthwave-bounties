@@ -1,0 +1,44 @@
+.post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.post-form label {
+  color: var(--cyan);
+  font-size: 0.95rem;
+  margin-top: 0.6rem;
+  letter-spacing: 0.03em;
+}
+
+.post-form input,
+.post-form textarea {
+  background: var(--bg);
+  border: 1px solid var(--text-dim);
+  color: var(--text);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.6rem;
+  outline: none;
+}
+
+.post-form input:focus,
+.post-form textarea:focus {
+  border-color: var(--cyan);
+}
+
+.post-form textarea {
+  resize: vertical;
+}
+
+.post-form .btn {
+  margin-top: 1.25rem;
+  align-self: flex-start;
+}
+
+.form-error {
+  color: var(--danger);
+  font-size: 0.95rem;
+  border: 1px solid var(--danger);
+  border-radius: var(--radius);
+  padding: 0.4em 0.6em;
+}
