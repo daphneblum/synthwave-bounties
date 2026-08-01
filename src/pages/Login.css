@@ -5,6 +5,13 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  /* fallback if the video fails to load, is blocked, or hasn't loaded yet */
+  background: radial-gradient(
+    ellipse at center 40%,
+    #3a1a5c 0%,
+    #1a0a3a 45%,
+    var(--bg) 100%
+  );
 }
 
 .login-video {
@@ -13,6 +20,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 50% center; /* tweak the horizontal % below if the sun still looks off-center */
   z-index: 0;
 }
 
@@ -21,8 +29,8 @@
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(13, 2, 33, 0.35) 0%,
-    rgba(13, 2, 33, 0.55) 60%,
+    rgba(13, 2, 33, 0.25) 0%,
+    rgba(13, 2, 33, 0.45) 80%,
     rgba(13, 2, 33, 0.85) 100%
   );
   z-index: 1;
@@ -37,6 +45,10 @@
 }
 
 .login-title {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0;
   font-family: var(--font-display);
   font-size: 1.6rem;
   letter-spacing: 0.08em;
@@ -46,7 +58,7 @@
 }
 
 .login-title-accent {
-  color: var(--magenta);
+  color: var(--cyan);
 }
 
 .login-subtitle {

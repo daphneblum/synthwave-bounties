@@ -22,7 +22,7 @@ export default function Login() {
     return (
         <div className="login-page">
             {/*placeolder*/}
-            <video className="login-video" autoPlay loop muted playsInLine>
+            <video className="login-video" autoPlay loop muted playsInline>
                 <source src="/media/login-loop.mp4" type="video/mp4" />
             </video>
             <div className="login-video-scrim" />
@@ -33,7 +33,7 @@ export default function Login() {
                 </h1>
                 <p className="login-subtitle">a bounty board for the terminally curious</p>
 
-                <form classname="login-form" onSubmit={handleSubmit}>
+                <form className="login-form" onSubmit={handleSubmit}>
                     {error && <div className="login-error">! {error}</div>}
                     <label htmlFor="username" className="visually-hidden">Username</label>
                     <input 
@@ -42,7 +42,7 @@ export default function Login() {
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         placeholder="ENTER USER ID"
-                        autofocus
+                        autoFocus
                     />
                     <button type="submit" className="btn magenta login-submit">
                         [CONNECT]

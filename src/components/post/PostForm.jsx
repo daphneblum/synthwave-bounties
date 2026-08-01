@@ -60,7 +60,7 @@ export default function PostForm({ initialValues, onSubmit, submitLabel }) {
                 type="submit"
                 className="btn magenta"
             >
-                [{submitLabel}]
+                POST
             </button>
         </form>
     );

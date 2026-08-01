@@ -177,6 +177,12 @@ input, textarea, select {
   white-space: nowrap;
 }
 
+/* Version 4.0 - Cool Blue Outer Glow Retro Synthwave - https://www.cursors-4u.com/cursor/version-4-0-cool-blue-outer-glow-pack-retro-synthwave-glitch-arrow */
+* {
+  cursor: url('https://cdn.cursors-4u.net/previews/cool-blue-ver4-1980s-32383645-32.webp') 34 33, auto !important;
+}
+/* End www.Cursors-4U.com Code */
+
 /* respect OS-level reduced motion no matter what */
 @media (prefers-reduced-motion: reduce) {
   * {

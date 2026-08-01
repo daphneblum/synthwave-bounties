@@ -3,9 +3,10 @@ import { AuthProvider } from './hooks/useAuth';
 import AuthGate from './components/shared/AuthGate';
 import Login from './pages/Login';
 import Feed from './pages/Feed';
-import PostDetailPage from './pages/PostDetail';
+import PostDetailPage from './pages/PostDetailPage';
+import { FlickerProvider, useFlickerPreference } from './hooks/useFlickerPreference';
 import FlickerOverlay from './components/layout/FlickerOverlay';
-import { useFlickerPreference } from './hooks/useFlickerPreference';
+
 
 function AppShell() {
     const { flickerActive } = useFlickerPreference();
@@ -15,7 +16,7 @@ function AppShell() {
             <FlickerOverlay active={flickerActive} />
             <Routes>
                 <Route path="/login" element={<Login />} />
-                <Route path="/post/:id" element={<AuthGate><Feed /></AuthGate>} />
+                <Route path="/" element={<AuthGate><Feed /></AuthGate>} />
                 <Route path="/post/:id" element={<AuthGate><PostDetailPage /></AuthGate>} />
             </Routes>
         </>
@@ -25,9 +26,11 @@ function AppShell() {
 export default function App() {
     return (
         <AuthProvider>
-            <BrowserRouter>
-                <AppShell />
-            </BrowserRouter>
+            <FlickerProvider>
+                <BrowserRouter>
+                    <AppShell />
+                </BrowserRouter>
+            </FlickerProvider>
         </AuthProvider>
-    )
+    );
 }

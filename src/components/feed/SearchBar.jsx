@@ -3,7 +3,7 @@ import './SearchBar.css';
 export default function SearchBar({ value, onChange }) {
     return (
         <div className='search-bar'>
-            <span className='search-prompt'>grep&gt;</span>
+            <span className='search-prompt'>{">"}</span>
             <input 
                 type="text" 
                 value={value}
