@@ -8,10 +8,14 @@ export default function Login() {
     const [error, setError] = useState('');
     const { claimUsername } = useAuth();
     const navigate = useNavigate();
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const result = claimUsername(username);
+        setIsSubmitting(true);
+        setError('');
+        const result = await claimUsername(username);
+        setIsSubmitting(false);
         if (result.error) {
             setError(result.error);
             return;
@@ -43,9 +47,10 @@ export default function Login() {
                         onChange={(e) => setUsername(e.target.value)}
                         placeholder="ENTER USER ID"
                         autoFocus
+                        disabled={isSubmitting}
                     />
-                    <button type="submit" className="btn magenta login-submit">
-                        [CONNECT]
+                    <button type="submit" className="btn magenta login-submit" disabled={isSubmitting}>
+                        [{isSubmitting ? 'CONNECTING...' : 'CONNECT'}]
                     </button>
                 </form>
                 <p className="login-hint">

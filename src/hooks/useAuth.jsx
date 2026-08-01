@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useCallback } from "react";
-import { mockUsers } from '../data/mockData';
+// import { mockUsers } from '../data/mockData';
+import { claimUsername as claimUsernameQuery } from "../lib/supabaseQueries";
 
 const STORAGE_KEY = 'hobbyhub_user';
 const AuthContext = createContext(null);
@@ -10,26 +11,13 @@ export function AuthProvider({ children }) {
         return stored ? JSON.parse(stored) : null;
     });
 
-    const claimUsername = useCallback((username) => {
-        const trimmed = username.trim();
-        if (!trimmed) return { error: 'USERNAME CANNOT BE BLANK' };
+    const claimUsername = useCallback(async(username) => {
+        const result = await claimUsernameQuery(username);
+        if (result.error) return { error: result.error };
         
-        let existing = mockUsers.find(
-            (u) => u.username.toLowerCase() === trimmed.toLowerCase()
-        );
-
-        if (!existing) {
-            existing = {
-                id: `u${mockUsers.length + 1}`,
-                username: trimmed,
-                created_at: new Date().toISOString(),
-            };
-            mockUsers.push(existing);
-        }
-
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
-        setUser(existing);
-        return { user: existing };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(result.user));
+        setUser(result.user);
+        return { user: result.user };
     }, []);
 
     const logout = useCallback(() => {

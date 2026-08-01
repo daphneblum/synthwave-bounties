@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import TerminalFrame from '../components/layout/TerminalFrame';
 import Navbar from '../components/layout/Navbar';
@@ -11,143 +11,193 @@ import ConfirmDialog from '../components/shared/ConfirmDialog';
 import LoadingIndicator from '../components/shared/LoadingIndicator';
 import { useAuth } from '../hooks/useAuth';
 import { useFlickerPreference } from '../hooks/useFlickerPreference';
-import { mockPosts, mockComments, mockVotes } from '../data/mockData';
+import { fetchPostById, fetchComments, fetchUserVotes, toggleVote, updatePost, deletePost, createComment, setAcceptedComment, } from '../lib/supabaseQueries';
 
 export default function PostDetailPage() {
-  const { id } = useParams();
-  const { user } = useAuth();
-  const navigate = useNavigate();
-  const { flickerEnabled, toggle, lockedByOS } = useFlickerPreference();
+    const { id } = useParams();
+    const { user } = useAuth();
+    const navigate = useNavigate();
+    const { flickerEnabled, toggle, lockedByOS } = useFlickerPreference();
 
-  const [, forceRerender] = useState(0);
-  const rerender = () => forceRerender((n) => n + 1);
+    const [post, setPost] = useState(null);
+    const [comments, setcomments] = useState([]);
+    const [hasVoted, setHasVoted] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    
+    const [loadError, setLoadError] = useState('');
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const [action,Error, setActionError] = useState('');
 
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const loadPost = useCallback(async () => {
+        setIsLoading(true);
+        setLoadError('');
 
-  const isLoading = false; // TODO: real loading state once Supabase is wired up
+        const [postResult, commentsResult, votesResult] = await Promise.all([
+            fetchPostById(id),
+            fetchComments(id),
+            user ? fetchUserVotes(user.id) : Promise.resolve({ votedPostIds: [] }),
+        ]);
 
-  const post = mockPosts.find((p) => p.id === id);
-  const comments = useMemo(
-    () => mockComments.filter((c) => c.post_id === id),
-    [id, mockComments.length] // eslint-disable-line react-hooks/exhaustive-deps
-  );
+        if (postResult.error) {
+            setLoadError(postResult.error);
+            setIsLoading(false);
+            return;
+        }
 
-  if (isLoading) {
-    return (
-      <TerminalFrame title="POST.EXE">
-        <LoadingIndicator label="FETCHING RECORD" />
-      </TerminalFrame>
-    );
-  }
+        setPost(postResult.post);
+        setcomments(commentsResult.comments || []);
+        setHasVoted(votesResult.votedPostIds?.includes(id) ?? false);
+        setIsLoading(false);
+    }, [id, user]);
 
-  if (!post) {
-    return (
-      <TerminalFrame title="POST.EXE">
-        <p className="empty-state">RECORD NOT FOUND. IT MAY HAVE BEEN PURGED.</p>
-      </TerminalFrame>
-    );
-  }
+    useEffect(() => {
+        loadPost();
+    }, [loadPost]);
 
-  const isAuthor = user && user.id === post.author_id;
-  const hasVoted =
-    !!user && mockVotes.some((v) => v.post_id === post.id && v.user_id === user.id);
-
-  const handleVote = () => {
-    if (!user) return;
-    const existingIndex = mockVotes.findIndex(
-      (v) => v.post_id === post.id && v.user_id === user.id
-    );
-    if (existingIndex >= 0) {
-      mockVotes.splice(existingIndex, 1);
-      post.upvote_count -= 1;
-    } else {
-      mockVotes.push({ id: `v${Date.now()}`, post_id: post.id, user_id: user.id });
-      post.upvote_count += 1;
+    if (isLoading) {
+        return (
+            <TerminalFrame title="POST.EXE">
+                <LoadingIndicator label="FETCHING RECORD" />
+            </TerminalFrame>
+        );
     }
-    rerender();
-  };
 
-  const handleEdit = ({ title, body, image_url }) => {
-    post.title = title;
-    post.body = body;
-    post.image_url = image_url;
-    setShowEditModal(false);
-    rerender();
-  };
+    if (loadError) {
+        return (
+            <TerminalFrame title="POST.EXE">
+                <p className="empty-state">
+                    CONNECTION ERROR: {loadError}
+                    <br />
+                    <button className="btn" onClick={loadPost} style={{ marginTop: '0.75rem' }}>
+                        [RETRY]
+                    </button>
+                </p>
+            </TerminalFrame>
+        );
+    }
 
-  const handleDelete = () => {
-    const index = mockPosts.findIndex((p) => p.id === post.id);
-    if (index >= 0) mockPosts.splice(index, 1);
-    setShowDeleteConfirm(false);
-    navigate('/');
-  };
+    if (!post) {
+        return (
+            <TerminalFrame title="POST.EXE">
+                <p className="empty-state">
+                    RECORD NOT FOUND. IT MAY HAVE BEEN PURGED.
+                </p>
+            </TerminalFrame>
+        );
+    }
 
-  const handleAddComment = (body) => {
-    mockComments.push({
-      id: `c${Date.now()}`,
-      post_id: post.id,
-      author_id: user.id,
-      author_username: user.username,
-      body,
-      created_at: new Date().toISOString(),
-    });
-    rerender();
-  };
+    const isAuthor = user && user.id === post.author_id;
+    const handleVote = async () => {
+        if (!user) return;
+        const currentlyVoted = hasVoted;
+        setHasVoted(!currentlyVoted);
+        setPost((prev) => ({
+            ...prev,
+            upvote_count: prev.upvote_count + (currentlyVoted ? -1 : 1),
+        }));
 
-  const handleMarkBest = (commentId) => {
-    post.accepted_comment_id =
-      post.accepted_comment_id === commentId ? null : commentId;
-    rerender();
-  };
+        const result = await toggleVote(post.id, user.id, currentlyVoted);
+        if (result.error) {
+            loadPost();
+            return;
+        }
+        setPost((prev) => ({ ...prev, upvote_count: result.upvoteCount }));
+    };
 
-  return (
-    <TerminalFrame title="POST.EXE">
-      <Navbar
-        flickerEnabled={flickerEnabled}
-        onToggleFlicker={toggle}
-        flickerLocked={lockedByOS}
-      />
+    const handleEdit = async ({ title, body, image_url }) => {
+        setActionError('');
+        const result = await updatePost(post.id, { title, body, imageUrl: image_url });
+        if (result.error) {
+            setActionError(result.error);
+            return;
+        }
+        setPost(result.post);
+        setShowEditModal(false);   
+    };
 
-      <PostDetail
-        post={post}
-        hasVoted={hasVoted}
-        onVote={handleVote}
-        isAuthor={isAuthor}
-        onEdit={() => setShowEditModal(true)}
-        onDelete={() => setShowDeleteConfirm(true)}
-      />
+    const handleDelete = async () => {
+        const result = await deletePost(post.id);
+        if (result.error) {
+            setActionError(result.error);
+            setShowDeletionConfirm(false);
+            return;
+        }
+        navigate('/');
+    };
 
-      <h2 className="thread-heading">ANSWERS</h2>
-      <CommentThread
-        comments={comments}
-        acceptedCommentId={post.accepted_comment_id}
-        canMarkBest={isAuthor}
-        onMarkBest={handleMarkBest}
-      />
+    const handleAddComment = async (body) => {
+        const result = await createComment({
+            postId: post.id,
+            authorId: user.id,
+            body,
+        });
+        if (result.error) {
+            setActionError(result.error);
+            return;
+        }
+        setcomments((prev) => [...prev, result.comment]);
+    };
 
-      {user && <CommentComposer onSubmit={handleAddComment} />}
+    const handleMarkBest = async (commentId) => {
+        const newAcceptedId = post.accepted_comment_id === commentId ? null : commentId;
+        const result = await setAcceptedComment(post.id, newAcceptedId);
+        if (result.error) {
+            setActionError(result.error);
+            return;
+        }
+        setPost(result.post);
+    };
 
-      {showEditModal && (
-        <Modal title="EDIT_ENTRY.EXE" onClose={() => setShowEditModal(false)}>
-          <PostForm
-            initialValues={post}
-            onSubmit={handleEdit}
-            submitLabel="SAVE CHANGES"
-          />
-        </Modal>
-      )}
-
-      {showDeleteConfirm && (
-        <ConfirmDialog
-          title="CONFIRM_PURGE.EXE"
-          message="PURGE THIS RECORD? THIS ACTION CANNOT BE UNDONE."
-          confirmLabel="PURGE"
-          cancelLabel="ABORT"
-          onConfirm={handleDelete}
-          onCancel={() => setShowDeleteConfirm(false)}
+    return (
+        <TerminalFrame title="POST.EXE">
+        <Navbar
+            flickerEnabled={flickerEnabled}
+            onToggleFlicker={toggle}
+            flickerLocked={lockedByOS}
         />
-      )}
-    </TerminalFrame>
-  );
+
+        {actionError && <div className="form-error">! {actionError}</div>}
+
+        <PostDetail
+            post={post}
+            hasVoted={hasVoted}
+            onVote={handleVote}
+            isAuthor={isAuthor}
+            onEdit={() => setShowEditModal(true)}
+            onDelete={() => setShowDeleteConfirm(true)}
+        />
+
+        <h2 className="thread-heading">ANSWERS</h2>
+        <CommentThread
+            comments={comments}
+            acceptedCommentId={post.accepted_comment_id}
+            canMarkBest={isAuthor}
+            onMarkBest={handleMarkBest}
+        />
+
+        {user && <CommentComposer onSubmit={handleAddComment} />}
+
+        {showEditModal && (
+            <Modal title="EDIT_ENTRY.EXE" onClose={() => setShowEditModal(false)}>
+            <PostForm
+                initialValues={post}
+                onSubmit={handleEdit}
+                submitLabel="SAVE CHANGES"
+            />
+            </Modal>
+        )}
+
+        {showDeleteConfirm && (
+            <ConfirmDialog
+            title="CONFIRM_PURGE.EXE"
+            message="PURGE THIS RECORD? THIS ACTION CANNOT BE UNDONE."
+            confirmLabel="PURGE"
+            cancelLabel="ABORT"
+            onConfirm={handleDelete}
+            onCancel={() => setShowDeleteConfirm(false)}
+            />
+        )}
+        </TerminalFrame>
+    );
 }

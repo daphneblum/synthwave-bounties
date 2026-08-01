@@ -8,7 +8,7 @@ export default function SearchBar({ value, onChange }) {
                 type="text" 
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
-                placeholder='Search bounty titles...'
+                placeholder='search bounties...'
                 aria-label='Search posts by title'
             />
         </div>

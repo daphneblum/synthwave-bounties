@@ -35,7 +35,7 @@ export default function Navbar({
                     <div className="user-chip">
                         <span className="user-id">@{user.username}</span>
                         <button className="logout-link" onClick={logout}>
-                            [switch]
+                            [logout]
                         </button>
                     </div>
                 )}
