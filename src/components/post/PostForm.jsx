@@ -10,11 +10,7 @@ export default function PostForm({ initialValues, onSubmit, submitLabel }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!title.trim()) {
-            SpeechSynthesisErrorEvent('TITLE REQUIRED');
-            return;
-        }
-        if (!body.trim()) {
-            setError('BODY REQUIRED');
+            setError('TITLE REQUIRED');
             return;
         }
         setError('');
@@ -38,7 +34,7 @@ export default function PostForm({ initialValues, onSubmit, submitLabel }) {
                 autoFocus
             />
 
-            <label htmlFor="post-body">bounty_details</label>
+            <label htmlFor="post-body">bounty_details (optional)</label>
             <textarea
                 id="post-body"
                 value={body}
@@ -60,7 +56,7 @@ export default function PostForm({ initialValues, onSubmit, submitLabel }) {
                 type="submit"
                 className="btn magenta"
             >
-                POST
+                {submitLabel || 'POST'}
             </button>
         </form>
     );
