@@ -87,6 +87,11 @@ Several of the trickiest issues weren't in the app logic itself but in the gap b
 - Stale local state after backend migration: after switching from mock in-memory data to real Supabase queries, a cached (mock-shaped) user object left over in localStorage caused malformed database queries, since the app trusted the cached shape without validating it against the live schema.
 - Shared vs. isolated React state: an early version of the CRT-effect toggle used a plain custom hook called independently in multiple components, which meant each call site got its own isolated state instance instead of a shared one — clicking the toggle in the navbar wouldn't affect the overlay rendered elsewhere until a full page refresh. Fixing this required moving the preference into React Context so all consumers share one source of truth.
 - CRT effect scope: the terminal aesthetic is implemented in pure CSS. True lens/barrel distortion of on-screen content (actually warping the pixels) would require SVG displacement filters or a canvas/WebGL approach, which was out of scope; the vignette-based illusion was used as a practical middle ground.
+- This project is a work in progress that will be continued after CodePath. Planned further developments are:
+    - Users accumulate points when their answer is chosen as the best answer.
+    - Additional visuals on feed page.
+    - Profile pages and photos.
+    - Visual options that can be "bought" with earned points.
 
 ## License
 
