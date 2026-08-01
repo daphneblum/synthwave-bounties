@@ -92,12 +92,14 @@ Several of the trickiest issues weren't in the app logic itself but in the gap b
     - Additional visuals on feed page.
     - Profile pages and photos.
     - Visual options that can be "bought" with earned points.
+    - Add optional music player using uppbeat.io for immersion
 
 - [Link to live site](https://synthwave-bounties-six.vercel.app/)
 
 ## License
 
     Copyright 2026 Daphne Blum
+    Favicon by rawpixel.com
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
