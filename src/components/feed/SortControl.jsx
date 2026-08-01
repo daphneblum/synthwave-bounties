@@ -1,4 +1,4 @@
-import './Sortcontrol.css';
+import './SortControl.css';
 
 const OPTIONS = [
     { value: 'newest', label: 'NEWEST' },
