@@ -93,6 +93,8 @@ Several of the trickiest issues weren't in the app logic itself but in the gap b
     - Profile pages and photos.
     - Visual options that can be "bought" with earned points.
 
+- [Link to live site](https://synthwave-bounties-six.vercel.app/)
+
 ## License
 
     Copyright 2026 Daphne Blum
