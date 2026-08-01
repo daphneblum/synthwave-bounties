@@ -17,7 +17,7 @@ export default function Feed() {
     const navigate = useNavigate();
     const { flickerEnabled, toggle, lockedByOS } = useFlickerPreference();
 
-    const [posts, setPosts] = useState(mockPosts);
+    const [posts, setPosts] = useState([]);
     const [votedPostIds, setVotedPostIds] = useState(new Set());
     const [isLoading, setIsLoading] = useState(true);
     const [loadError, setLoadError] = useState('');

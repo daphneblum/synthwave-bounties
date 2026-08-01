@@ -27,7 +27,7 @@ export default function PostDetailPage() {
     const [loadError, setLoadError] = useState('');
     const [showEditModal, setShowEditModal] = useState(false);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-    const [action,Error, setActionError] = useState('');
+    const [actionError, setActionError] = useState('');
 
     const loadPost = useCallback(async () => {
         setIsLoading(true);

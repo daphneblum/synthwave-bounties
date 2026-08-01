@@ -1,10 +1,13 @@
 import './FlickerOverlay.css';
 
 export default function FlickerOverlay({ active }) {
-    return (
-        <div className='flicker-overlay' aria-hidden="true">
-            <div className='scanlines' />
-            {active && <div className='flicker-layer' />}
-        </div>
-    );
+  if (!active) return null;
+
+  return (
+    <div className="flicker-overlay" aria-hidden="true">
+        <div className="scanlines" />
+        <div className="crt-vignette" />
+        <div className="crt-roll" />
+    </div>
+  );
 }

@@ -27,8 +27,8 @@ export default function Navbar({
                     className="flicker-toggle" 
                     onClick={onToggleFlicker} 
                     disabled={flickerLocked} 
-                    title={flickerLocked ? 'Disabled by your system reduced-motion setting' : 'Toggle CRT flicker effect'}>
-                    FLICKER: {flickerEnabled ? 'ON' : 'OFF'}
+                    title={flickerLocked ? 'Disabled by your system reduced-motion setting' : 'Toggle CRT effect'}>
+                    CRT FX: {flickerEnabled ? 'ON' : 'OFF'}
                 </button>
 
                 {user && (

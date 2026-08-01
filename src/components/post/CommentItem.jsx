@@ -10,7 +10,7 @@ export default function CommentItem({
     return (
         <div className={`comment-item ${isAccepted ? 'accepted' : ''}`}>
             {isAccepted && (
-                <div className="accepted-banner">VERIFIED - BEST ANSWER</div>
+                <div className="accepted-banner">BOUNTY AWARDED - BEST ANSWER</div>
             )}
             <p className="comment-body">{comment.body}</p>
             <div className="comment-meta">
