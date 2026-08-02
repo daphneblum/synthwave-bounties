@@ -5,3 +5,32 @@
   flex-wrap: wrap;
   gap: 0.75rem;
 }
+
+.feed-page-wrapper {
+  position: relative;
+}
+
+
+.feed-bg-planet {
+  position: fixed;
+  bottom: -4vh;
+  right: -8vw;
+  width: 52vw;
+  max-width: 820px;
+  min-width: 420px;
+  opacity: 0.9;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.terminal-frame {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 900px) {
+  .feed-bg-planet {
+    display: none;
+  }
+}

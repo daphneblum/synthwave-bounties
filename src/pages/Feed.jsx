@@ -103,59 +103,67 @@ export default function Feed() {
     }, [posts, searchQuery, sortBy]);
 
     return (
-        <TerminalFrame title="FEED.EXE">
-            <Navbar
-                searchQuery={searchQuery}
-                onSearchChange={setSearchQuery}
-                flickerEnabled={flickerEnabled}
-                onToggleFlicker={toggle}
-                flickerLocked={lockedByOS}
+        <div className="feed-page-wrapper">
+            <img
+            className="feed-bg-planet"
+            src="/media/feed-planet.png"
+            alt="Background Planet"
             />
+        
+            <TerminalFrame title="FEED.EXE">
+                <Navbar
+                    searchQuery={searchQuery}
+                    onSearchChange={setSearchQuery}
+                    flickerEnabled={flickerEnabled}
+                    onToggleFlicker={toggle}
+                    flickerLocked={lockedByOS}
+                />
 
-            <div className="feed-toolbar">
-                <SortControl value={sortBy} onChange={setSortBy} />
-                <button className="btn magenta" onClick={() => setShowCreateModal(true)}>[+ NEW BOUNTY]</button>
-            </div>
+                <div className="feed-toolbar">
+                    <SortControl value={sortBy} onChange={setSortBy} />
+                    <button className="btn magenta" onClick={() => setShowCreateModal(true)}>[+ NEW BOUNTY]</button>
+                </div>
 
-            {isLoading ? (
-                <LoadingIndicator label="FETCHING BOUNTIES" />
-            ) : loadError ? (
-                <p className="empty-state">
-                    CONNECTION ERROR: {loadError}
-                    <br />
-                    <button className="btn" onClick={loadFeed} style={{ marginTop: '0.75rem' }}>
-                        [RETRY]
-                    </button>
-                </p>
-            ) : visiblePosts.length === 0 ? (
-                <p className="empty-state">
-                    NO BOUNTIES MATCH THAT QUERY. TRY A DIFFERENT SEARCH, OR POST ONE YOURSELF.
-                </p>
-            ) : (
-                visiblePosts.map((post) => (
-                    <PostCard
-                        key={post.id}
-                        post={post}
-                        commentCount={post.comment_count}
-                        hasVoted={votedPostIds.has(post.id)}
-                        onVote={() => handleVote(post.id)}
-                    />
-                ))
-            )}
+                {isLoading ? (
+                    <LoadingIndicator label="FETCHING BOUNTIES" />
+                ) : loadError ? (
+                    <p className="empty-state">
+                        CONNECTION ERROR: {loadError}
+                        <br />
+                        <button className="btn" onClick={loadFeed} style={{ marginTop: '0.75rem' }}>
+                            [RETRY]
+                        </button>
+                    </p>
+                ) : visiblePosts.length === 0 ? (
+                    <p className="empty-state">
+                        NO BOUNTIES MATCH THAT QUERY. TRY A DIFFERENT SEARCH, OR POST ONE YOURSELF.
+                    </p>
+                ) : (
+                    visiblePosts.map((post) => (
+                        <PostCard
+                            key={post.id}
+                            post={post}
+                            commentCount={post.comment_count}
+                            hasVoted={votedPostIds.has(post.id)}
+                            onVote={() => handleVote(post.id)}
+                        />
+                    ))
+                )}
 
-            {showCreateModal && (
-                <Modal
-                    title="NEW_ENTRY.EXE"
-                    onClose={() => {
-                        setShowCreateModal(false);
-                        setCreateError('');
-                    }}
-                >
-                    {createError && <div className="form-error">! {createError}</div>}
-                    <PostForm onSubmit={handleCreate} submitLabel="POST BOUNTY" />
-                </Modal>
-            )}
-        </TerminalFrame>
+                {showCreateModal && (
+                    <Modal
+                        title="NEW_ENTRY.EXE"
+                        onClose={() => {
+                            setShowCreateModal(false);
+                            setCreateError('');
+                        }}
+                    >
+                        {createError && <div className="form-error">! {createError}</div>}
+                        <PostForm onSubmit={handleCreate} submitLabel="POST BOUNTY" />
+                    </Modal>
+                )}
+            </TerminalFrame>
+        </div>
     );
 }
 
