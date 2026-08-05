@@ -152,6 +152,12 @@ export async function createComment({ postId, authorId, body }) {
   };
 }
 
+export async function deleteComment(commentId) {
+  const { error } = await supabase.from('comments').delete().eq('id', commentId);
+  if (error) return { error: error.message };
+  return { success: true };
+}
+
 // ---------- VOTES ----------
 
 export async function fetchUserVotes(userId) {

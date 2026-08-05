@@ -43,3 +43,10 @@
 .mark-best-btn:hover {
   color: var(--magenta);
 }
+
+.comment-delete-btn {
+  color: var(--danger);
+}
+.comment-delete-btn:hover {
+  color: var(--magenta);
+}
