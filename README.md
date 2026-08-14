@@ -1,114 +1,157 @@
-# synthwave-bounties
-# Web Development Final Project - *SynthwaveBounties*
+# SynthwaveBounties 🚀
 
-Submitted by: **Daphne Blum**
+## Project Overview
 
-This web app: **SynthwaveBounties is a cyberpunk bounty-board Q&A app. Think Yahoo Answers rebuilt as a synthwave computer terminal. Users claim a persistent ID, post "bounties" (questions), answer other users' bounties, upvote posts, and mark the best answer to a question they posted. The entire interface leans into a retro-terminal aesthetic: pixel/terminal typography, a CRT effect (scanlines, screen curvature, and an occasional vertical roll) that's fully user-toggleable, and a looping synthwave-rendered video backdrop on the login screen.**
+SynthwaveBounties is a cyberpunk-themed Q&A application designed to mimic the aesthetic and functionality of old computer terminals. It functions as a bounty-board where users can post questions (bounties), answer others, upvote content, and designate the best answer. The application features a distinct retro-terminal interface with pixel typography, a customizable CRT effect (scanlines, curvature, screen roll), and a synthwave video backdrop on the login screen.
 
-Time spent: **30** hours spent in total
+## Features ✨
 
-## Required Features
+-   **Bounty Posting:** Create posts with a title, optional details, and an external image URL.
+-   **Home Feed:** View a feed of all posted bounties, displaying creation time, title, and upvote count.
+-   **Post Interaction:** Click on a post to view its full details, including content, image, and comments.
+-   **Commenting System:** Users can leave answers (comments) on bounty posts.
+-   **Upvoting:** Users can upvote posts any number of times.
+-   **Sorting & Filtering:** Sort posts by creation time or upvotes, and search by title.
+-   **Post Editing & Deletion:** Original authors can edit or delete their posts.
+-   **Pseudo-Authentication:** Users are assigned a persistent ID upon first use, allowing them to manage their posts and comments.
+-   **Best Answer Selection:** The original poster can mark one comment as the accepted/best answer.
+-   **Customizable CRT Theme:** A toggleable CRT effect with scanlines, vignette, and occasional screen roll, respecting OS reduced-motion settings.
+-   **Synthwave Login Screen:** Features a looping synthwave video background.
+-   **Loading Indicators:** Displays animations while data is being fetched.
 
-The following **required** functionality is completed:
+## Tech Stack 💻
+
+-   **Frontend:** React, React Router DOM
+-   **Styling:** CSS
+-   **Backend/Database:** Supabase (via `@supabase/supabase-js`)
+-   **Build Tool:** Vite
+-   **Linting:** Oxlint
+-   **TypeScript Support:** `@types/react`, `@types/react-dom`
+
+## Installation 🛠️
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/daphneblum/synthwave-bounties.git
+    cd synthwave-bounties
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
+
+3.  **Set up environment variables:**
+    Create a `.env` file in the root directory and add your Supabase project details:
+    ```env
+    VITE_SUPABASE_URL=YOUR_SUPABASE_URL
+    VITE_SUPABASE_PUBLISHABLE_KEY=YOUR_SUPABASE_ANON_KEY
+    ```
+    Replace `YOUR_SUPABASE_URL` and `YOUR_SUPABASE_ANON_KEY` with your actual Supabase credentials.
+
+4.  **Run the development server:**
+    ```bash
+    npm run dev
+    # or
+    yarn dev
+    ```
+
+## Usage 💡
+
+1.  **Access the Application:** Open your browser and navigate to the local development server address (usually `http://localhost:5173`).
+
+2.  **Login/Connect:**
+    *   Upon first visit, you will be presented with a login screen. Enter a desired username and click 'CONNECT'. A new user ID will be claimed for you.
+    *   If you have a previous ID, enter it to reconnect.
+
+3.  **Navigating the Feed:**
+    *   The main feed displays available bounties. You can search for specific bounties using the search bar in the navbar.
+    *   Use the 'Sort' options (`NEWEST`, `TOP VOTED`) to reorder the feed.
+    *   Click the `[+ NEW BOUNTY]` button to create a new post.
+
+4.  **Viewing and Interacting with a Bounty:**
+    *   Click on any bounty card in the feed to view its detailed page.
+    *   On the post detail page, you can:
+        *   Upvote the bounty (your vote is indicated).
+        *   View the bounty's description, image (if any), and existing answers.
+        *   If you are the author of the bounty, you can edit or delete it.
+        *   If you are logged in, you can submit an answer using the `CommentComposer` below the post.
+        *   The original poster can mark an answer as the 'BEST ANSWER'.
+        *   Authors can delete their own answers.
+
+5.  **CRT Effect Toggle:**
+    *   Use the 'CRT FX: ON/OFF' button in the navbar to enable or disable the retro terminal visual effects.
+
+## Project Structure 📂
+
+```
+synthwave-bounties/
+├── public/
+│   └── media/
+├── src/
+│   ├── components/
+│   │   ├── feed/
+│   │   ├── layout/
+│   │   ├── post/
+│   │   └── shared/
+│   ├── data/
+│   ├── hooks/
+│   ├── lib/
+│   ├── pages/
+│   ├── styles/
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css (implied by theme.css)
+├── .env (example)
+├── index.html
+├── package.json
+├── vite.config.js
+└── README.md
+```
+
+## Contributing 🤝
+
+Contributions are welcome! Please follow these guidelines:
+
+1.  Fork the repository.
+2.  Create a new branch for your feature (`git checkout -b feature/your-feature-name`).
+3.  Make your changes and commit them (`git commit -m 'Add some feature'`).
+4.  Push to the branch (`git push origin feature/your-feature-name`).
+5.  Open a Pull Request.
+
+## License 📄
+
+This project is licensed under the Apache License, Version 2.0.
+
+```
+Copyright 2026 Daphne Blum
+Favicon by rawpixel.com
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
+
+## Important Links 🔗
+
+-   **Live Demo:** [https://synthwave-bounties-six.vercel.app/](https://synthwave-bounties-six.vercel.app/)
+
+## Footer 👣
+
+© 2026 SynthwaveBounties | Built with ❤️ by Daphne Blum
+
+[GitHub Repository](https://github.com/daphneblum/synthwave-bounties)
 
 
-- [x] **Web app includes a create form that allows the user to create posts**
-  - Form requires users to add a post title
-  - Forms should have the *option* for users to add: 
-    - additional textual content
-    - an image added as an external image URL
-- [x] **Web app includes a home feed displaying previously created posts**
-  - Web app must include home feed displaying previously created posts
-  - By default, each post on the posts feed should show only the post's:
-    - creation time
-    - title 
-    - upvotes count
-  - Clicking on a post should direct the user to a new page for the selected post
-- [x] **Users can view posts in different ways**
-  - Users can sort posts by either:
-    -  creation time
-    -  upvotes count
-  - Users can search for posts by title
-- [x] **Users can interact with each post in different ways**
-  - The app includes a separate post page for each created post when clicked, where any additional information is shown, including:
-    - content
-    - image
-    - comments
-  - Users can leave comments underneath a post on the post page
-  - Each post includes an upvote button on the post page. 
-    - Each click increases the post's upvotes count by one
-    - Users can upvote any post any number of times
-
-- [x] **A post that a user previously created can be edited or deleted from its post pages**
-  - After a user creates a new post, they can go back and edit the post
-  - A previously created post can be deleted from its post page
-
-The following **optional** features are implemented:
-
-
-- [x] Web app implements pseudo-authentication
-  - Users can only edit and delete posts or delete comments by entering the secret key, which is set by the user during post creation
-  - **or** upon launching the web app, the user is assigned a random user ID. It will be associated with all posts and comments that they make and displayed on them
-  - For both options, only the original user author of a post can update or delete it
-- [ ] Users can repost a previous post by referencing its post ID. On the post page of the new post
-  - Users can repost a previous post by referencing its post ID
-  - On the post page of the new post, the referenced post is displayed and linked, creating a thread
-- [x] Users can customize the interface
-  - e.g., selecting the color scheme or showing the content and image of each post on the home feed
-- [ ] Users can add more characterics to their posts
-  - Users can share and view web videos
-  - Users can set flags such as "Question" or "Opinion" while creating a post
-  - Users can filter posts by flags on the home feed
-  - Users can upload images directly from their local machine as an image file
-- [x] Web app displays a loading animation whenever data is being fetched
-
-The following **additional** features are implemented:
-
-* [x] Best-answer selection: the original poster can mark one comment as the accepted/best answer, which is visually highlighted and pinned to the top of the comment thread
-* [x] Fully custom CRT terminal theme: scanlines, screen-curvature vignette, and an occasional vertical roll effect, bundled under a single user-toggleable "CRT FX" setting that respects OS-level reduced-motion preferences
-* [x] Looping synthwave video background on the login screen, built from an original Blender render
-* [x] Combinable search + sort on the home feed (search and sort filters apply together rather than being mutually exclusive)
-
-## Video Walkthrough
-
-Here's a walkthrough of implemented user stories:
-
-<img src='/public/media/synthwave-bounties.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-
-<!-- Replace this with whatever GIF tool you used! -->
-GIF created with ...
-Canva
-
-## Notes
-
-Several of the trickiest issues weren't in the app logic itself but in the gap between local dev and a real backend:
-
-- Missing table grants: tables created directly via SQL (rather than Supabase's Table Editor UI) didn't automatically grant the anon role permission to read/write, which surfaced as opaque "permission denied" errors until explicit GRANT statements were added.
-- Stale local state after backend migration: after switching from mock in-memory data to real Supabase queries, a cached (mock-shaped) user object left over in localStorage caused malformed database queries, since the app trusted the cached shape without validating it against the live schema.
-- Shared vs. isolated React state: an early version of the CRT-effect toggle used a plain custom hook called independently in multiple components, which meant each call site got its own isolated state instance instead of a shared one — clicking the toggle in the navbar wouldn't affect the overlay rendered elsewhere until a full page refresh. Fixing this required moving the preference into React Context so all consumers share one source of truth.
-- CRT effect scope: the terminal aesthetic is implemented in pure CSS. True lens/barrel distortion of on-screen content (actually warping the pixels) would require SVG displacement filters or a canvas/WebGL approach, which was out of scope; the vignette-based illusion was used as a practical middle ground.
-- This project is a work in progress that will be continued after CodePath. Planned further developments are:
-    - Users accumulate points when their answer is chosen as the best answer.
-    - Additional visuals on feed page.
-    - Profile pages and photos.
-    - Visual options that can be "bought" with earned points.
-    - Add optional music player using uppbeat.io for immersion
-
-- [Link to live site](https://synthwave-bounties-six.vercel.app/)
-
-## License
-
-    Copyright 2026 Daphne Blum
-    Favicon by rawpixel.com
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+---
+**<p align="center">Generated by [ReadmeCodeGen](https://www.readmecodegen.com/)</p>**
