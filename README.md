@@ -4,6 +4,8 @@
 
 SynthwaveBounties is a cyberpunk-themed Q&A application designed to mimic the aesthetic and functionality of old computer terminals. It functions as a bounty-board where users can post questions (bounties), answer others, upvote content, and designate the best answer. The application features a distinct retro-terminal interface with pixel typography, a customizable CRT effect (scanlines, curvature, screen roll), and a synthwave video backdrop on the login screen.
 
+<img src="./public/media/synthwave-bounties.gif" alt="Demo gif" width="500">
+
 ## Features ✨
 
 -   **Bounty Posting:** Create posts with a title, optional details, and an external image URL.
